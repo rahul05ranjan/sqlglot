@@ -296,6 +296,12 @@ class TestDatabricks(Validator):
             "SELECT test, LISTAGG(email, '') AS Email FROM organizations GROUP BY test",
         )
 
+        # The separator must not be swallowed into the DISTINCT expression list
+        self.validate_identity("SELECT LISTAGG(DISTINCT x, '-') FROM t")
+        self.validate_identity(
+            "SELECT LISTAGG(DISTINCT x, '-') WITHIN GROUP (ORDER BY x DESC) FROM t"
+        )
+
         self.validate_identity(
             "WITH t AS (VALUES ('foo_val') AS t(foo1)) SELECT foo1 FROM t",
             "WITH t AS (SELECT * FROM VALUES ('foo_val') AS t(foo1)) SELECT foo1 FROM t",

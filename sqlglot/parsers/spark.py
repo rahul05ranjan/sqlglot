@@ -121,6 +121,7 @@ class SparkParser(Spark2Parser):
     FUNCTION_PARSERS = {
         **Spark2Parser.FUNCTION_PARSERS,
         "SUBSTR": lambda self: self._parse_substring(),
+        "LISTAGG": lambda self: self._parse_string_agg(),
     }
 
     STATEMENT_PARSERS = {
