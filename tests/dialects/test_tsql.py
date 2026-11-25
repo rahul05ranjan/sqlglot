@@ -1972,6 +1972,24 @@ WHERE
             'SELECT DATEPART("dd", x)',
             "SELECT DATEPART(DAY, x)",
         )
+        self.validate_all(
+            "SELECT DATEPART(WEEKDAY, x)",
+            read={
+                "postgres": "SELECT EXTRACT(dow FROM x)",
+            },
+            write={
+                "tsql": "SELECT DATEPART(WEEKDAY, x)",
+            },
+        )
+        self.validate_all(
+            "SELECT DATEPART(DAYOFYEAR, x)",
+            read={
+                "postgres": "SELECT EXTRACT(doy FROM x)",
+            },
+            write={
+                "tsql": "SELECT DATEPART(DAYOFYEAR, x)",
+            },
+        )
 
     def test_convert(self):
         self.validate_all(
